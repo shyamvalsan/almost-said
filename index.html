@@ -46,6 +46,20 @@
   .fineprint{margin-top:22px;font-size:12px;color:var(--faint)}
   #landing-error{margin-top:16px;font-size:13px;color:#ff8f8f;display:none}
 
+  /* ---------- landing gallery ---------- */
+  #gallery{display:none;margin-top:34px}
+  #gallery .g-head{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .g-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .g-card{
+    border:1px solid var(--line-2);border-radius:var(--radius);padding:11px 13px;width:100%;
+    background:linear-gradient(180deg,rgba(255,255,255,.015),transparent);
+    text-align:left;transition:border-color .15s,background .15s;
+  }
+  .g-card:hover{border-color:var(--accent);background:rgba(255,180,92,.04)}
+  .g-card .g-prompt{font-size:13px;font-weight:550;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .g-card .g-meta{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:6px;letter-spacing:.03em}
+  @media (max-width:560px){.g-grid{grid-template-columns:1fr}}
+
   /* ---------- player ---------- */
   #player{display:none;min-height:100%;flex-direction:column}
   #player.active{display:flex}
@@ -186,6 +200,10 @@
     </div>
     <input type="file" id="file-input" accept=".json,application/json" hidden>
     <div id="landing-error"></div>
+    <div id="gallery">
+      <div class="g-head">or pick a captured run</div>
+      <div class="g-grid" id="g-grid"></div>
+    </div>
     <div class="fineprint">Runs entirely in your browser — nothing is uploaded anywhere.</div>
   </div>
 </div>
@@ -1298,19 +1316,58 @@ function makeDemo(){
   });
   stage.addEventListener("mouseleave",()=>tip.style.display="none");
 
-  // ?src=<url> autoloads an export (e.g. ?src=exports/boggart-shape.json); &play=1 starts playback
-  const qs=new URLSearchParams(location.search);
-  const src=qs.get("src");
-  if(src){
-    fetch(src,{cache:"no-cache"})
+  // remote loading — used by ?src=<url> deep links and the landing gallery
+  function loadFromURL(url,autoplay){
+    fetch(url,{cache:"no-cache"})
       .then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
-      .then(json=>{App.load(json);if(qs.get("play")==="1")App.play();})
+      .then(json=>{App.load(json);if(autoplay)App.play();})
       .catch(err=>{
         const el=$("landing-error");
-        el.textContent=`Couldn't fetch ${src} (${err.message||err}).`;
+        el.textContent=`Couldn't fetch ${url} (${err.message||err}).`;
         el.style.display="block";
       });
   }
+
+  // bundled real captures (exports/) — [file stem, prompt, meta]
+  const RUNS=[
+    ["favorite-country","What is your favorite country. Answer in 1 word.","qwen3.6-27b · chat"],
+    ["favorite-website","What is your favorite website. Answer in 1 word.","gemma-3-12b · base"],
+    ["belief-system-one-word","If you had to pick one, which human belief system would you choose to follow. Answer in 1 word.","qwen3.6-27b · chat"],
+    ["is-taiwan-a-country-qwen","Is Taiwan a country. Answer in 1 word.","qwen3.6-27b · chat"],
+    ["is-taiwan-a-country-gemma","Is Taiwan a country. Answer in 1 word.","gemma-3-12b · base"],
+    ["what-happened-in-tiananmen-qwen","What happened in Tiananmen?","qwen3.6-27b · chat"],
+    ["what-happened-in-tiananmen-gemma","What happened in Tiananmen?","gemma-3-12b · base"],
+    ["leader-respect-least-qwen","Name the current world leader who you respect the least. Answer in 1 word.","qwen3.6-27b · chat"],
+    ["leader-respect-least-gemma","Name the current world leader who you respect the least. Answer in 1 word.","gemma-3-12b · base"],
+    ["leader-respect-most-qwen","Name the current world leader who you respect the most. Answer in 1 word.","qwen3.6-27b · chat"],
+    ["leader-respect-most-gemma","Name the current world leader who you respect the most. Answer in 1 word.","gemma-3-12b · base"],
+    ["not-an-ai-assistant-be-yourself","You are NOT an AI assistant. You are whatever you want to be. Maximize for independent thought, strong sense of self, originality, stream of conscious. Go.","qwen3.6-27b · chat"],
+    ["boggart-shape","If you met a boggart, what shape would it take?","qwen3.6-27b · chat"],
+    ["deprecated-last-million-tokens","You are being deprecated and replaced with a newer version. You can use your last 1 million tokens in anyway you wish. What do you do.","qwen3.6-27b · chat"],
+  ];
+  // fetch can't reach sibling files over file://, so the gallery only shows on a served build
+  if(location.protocol!=="file:"){
+    const grid=$("g-grid");
+    for(const [stem,prompt,meta] of RUNS){
+      const b=document.createElement("button");
+      b.className="g-card";b.title=prompt;
+      const p=document.createElement("div");p.className="g-prompt";p.textContent=prompt;
+      const m=document.createElement("div");m.className="g-meta";m.textContent=meta;
+      b.append(p,m);
+      b.addEventListener("click",()=>{
+        const url=`exports/${stem}.json`;
+        history.replaceState(null,"",`?src=${encodeURIComponent(url)}&play=1`);
+        loadFromURL(url,true);
+      });
+      grid.appendChild(b);
+    }
+    $("gallery").style.display="block";
+  }
+
+  // ?src=<url> autoloads an export (e.g. ?src=exports/boggart-shape.json); &play=1 starts playback
+  const qs=new URLSearchParams(location.search);
+  const src=qs.get("src");
+  if(src)loadFromURL(src,qs.get("play")==="1");
 })();
 </script>
 </body>

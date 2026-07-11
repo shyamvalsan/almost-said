@@ -42,7 +42,7 @@ It is one self-contained HTML file with no build step.
 ## Use it
 
 1. Open the page.
-2. Click **watch the demo** to see it run on the bundled synthetic export, or drop your own export onto the page (`examples/sky-demo.json` is a loadable sample; `exports/` holds real captures from qwen3.6-27b and gemma-3-12b).
+2. Click **watch the demo** to see it run on the bundled synthetic export, or drop your own export onto the page (`examples/sky-demo.json` is a loadable sample). On a served build the landing page also shows a **captured runs** gallery: real exports from qwen3.6-27b and gemma-3-12b (bundled in `exports/`); pick one to watch it play and interact with it.
 3. Use the transport bar to play, pause, scrub, and change speed. Space toggles play/pause; the arrow keys step two seconds.
 4. Open **Settings** to change how the field is built.
 5. Click **Export** to save a WebM video (recorded locally) or an animated GIF (encoded frame by frame).
