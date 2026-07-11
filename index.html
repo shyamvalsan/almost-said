@@ -1297,6 +1297,20 @@ function makeDemo(){
     }else tip.style.display="none";
   });
   stage.addEventListener("mouseleave",()=>tip.style.display="none");
+
+  // ?src=<url> autoloads an export (e.g. ?src=exports/boggart-shape.json); &play=1 starts playback
+  const qs=new URLSearchParams(location.search);
+  const src=qs.get("src");
+  if(src){
+    fetch(src,{cache:"no-cache"})
+      .then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+      .then(json=>{App.load(json);if(qs.get("play")==="1")App.play();})
+      .catch(err=>{
+        const el=$("landing-error");
+        el.textContent=`Couldn't fetch ${src} (${err.message||err}).`;
+        el.style.display="block";
+      });
+  }
 })();
 </script>
 </body>
