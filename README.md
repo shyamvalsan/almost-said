@@ -18,6 +18,15 @@ Neuronpedia hosts an [interactive explorer](https://www.neuronpedia.org/jlens) f
 - Companion code (Apache-2.0, reference implementation): https://github.com/anthropics/jacobian-lens
 - Neuronpedia explorer: https://www.neuronpedia.org/jlens
 
+## Upstreaming to Neuronpedia
+
+This started as a standalone tool, but the visualization belongs next to the data it reads. It is being contributed to Neuronpedia itself as a native "Field" view of the Jacobian Lens explorer, a Tokens/Field toggle that plays a run back over time using the explorer's own data and styling.
+
+- Proposal: https://github.com/hijohnnylin/neuronpedia/issues/206
+- Pull request: https://github.com/hijohnnylin/neuronpedia/pull/207
+
+![The Field view inside Neuronpedia's Jacobian Lens explorer](docs/neuronpedia/jlens-field-integration.png)
+
 ## Run it
 
 It is one self-contained HTML file with no build step.
