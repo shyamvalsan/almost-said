@@ -4,6 +4,8 @@ A single-file browser visualizer that turns a Jacobian-lens chat export into an 
 
 It reads a JSON export from [Neuronpedia's Jacobian-lens explorer](https://www.neuronpedia.org/jlens) and plays it back like a video: each bubble is a concept the lens surfaced, its size tracks how much decode probability the concept has accumulated, and its colour tracks salience relative to the strongest concept at that moment. The name is a nod to what the lens shows, the words a model was about to say but has not written yet.
 
+**Live demo:** https://shyamvalsan.github.io/almost-said/
+
 ![The visualizer running the built-in demo](docs/screenshot.png)
 
 ## Background
@@ -26,7 +28,7 @@ It is one self-contained HTML file with no build step.
   python3 -m http.server 8000
   # then open http://localhost:8000/
   ```
-- **Live demo.** If GitHub Pages is enabled for this repo, the same file is served at the Pages URL.
+- **Live demo.** The same file is served from GitHub Pages at https://shyamvalsan.github.io/almost-said/.
 
 ## Use it
 
