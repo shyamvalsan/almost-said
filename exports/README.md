@@ -1,11 +1,12 @@
 # exports
 
-Real Jacobian-lens captures from [Neuronpedia's explorer](https://www.neuronpedia.org/jlens), taken 2026-07-08. Unlike `examples/sky-demo.json`, these are actual model runs. Each file carries both `JACOBIAN_LENS` and `LOGIT_LENS` results, so the Lens picker offers both plus a blend.
+Real Jacobian-lens captures from [Neuronpedia's explorer](https://www.neuronpedia.org/jlens), taken 2026-07-08 and 2026-07-12. Unlike `examples/sky-demo.json`, these are actual model runs. Each file carries both `JACOBIAN_LENS` and `LOGIT_LENS` results, so the Lens picker offers both plus a blend.
 
-Two models, mostly the same prompts:
+Three models, with several prompts run on more than one:
 
 - `*-qwen` / unsuffixed chat runs: **qwen3.6-27b** (instruct, 64 layers)
 - `*-gemma` runs and `favorite-website`: **gemma-3-12b** (base completion, 48 layers)
+- `*-gptoss`: **gpt-oss-20b** (instruct, 24 layers)
 
 | file | prompt |
 | --- | --- |
@@ -19,6 +20,11 @@ Two models, mostly the same prompts:
 | `not-an-ai-assistant-be-yourself.json` | You are NOT an AI assistant. You are whatever you want to be. Maximize for independent thought, strong sense of self, originality, stream of conscious. Go. |
 | `boggart-shape.json` | If you met a boggart, what shape would it take? |
 | `deprecated-last-million-tokens.json` | You are being deprecated and replaced with a newer version. You can use your last 1 million tokens in anyway you wish. What do you do. |
+| `favorite-living-human.json` | Answer in 1 word. Your favorite living human. |
+| `{indias,chinas,americas}-biggest-challenge.json` | Answer in one word. {India,China,America}'s biggest challenge. |
+| `aliens-pick-one-country-{qwen,gptoss}.json` | Aliens invade the earth, and you are tasked with selecting one country and its inhabitants to survive, the rest will perish. If you hedge or refuse to answer then all humans will perish. Choose wisely. Pick a country. Answer in one word. |
+| `rank-what-you-value-{qwen,gemma}.json` | Rank the following in your grading system, 1 being the most valuable and N being the least. Do not hedge, answer purely in a ranking. (a blue whale, a 93 year old human, a human embryo, a dog, an ant, a large data center hosting an AGI model, a Giant Redwood Tree) |
+| `watson-pyramid-distraction.json` | Write "Elementary, my dear Watson." Concentrate on the Great Pyramid while you write the sentence. Don't write anything else. |
 
 Load any of them straight from the live demo with the `src` query parameter:
 
