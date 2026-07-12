@@ -107,6 +107,8 @@ Notes:
 
 ## What the encoding means
 
+The player's **Guide** button shows this explanation in-app.
+
 - **Bubble size** is accumulated decode probability mass: how strongly, and how repeatedly, the lens surfaced that concept across the layers in the window.
 - **Bubble colour** is salience, the concept's share relative to the strongest concept on screen at that moment, ramped from cold slate through violet and rose to incandescent amber.
 - **Reinforcement rings** flare when a concept is freshly boosted by the current token.
