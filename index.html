@@ -45,6 +45,8 @@
   .dropzone .dz-alt .link{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
   .fineprint{margin-top:22px;font-size:12px;color:var(--faint)}
   #landing-error{margin-top:16px;font-size:13px;color:#ff8f8f;display:none}
+  .get-export{margin-top:14px;font-size:12.5px;color:var(--muted)}
+  .get-export a,.help-note a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
 
   /* ---------- landing gallery ---------- */
   #gallery{display:none;margin-top:34px}
@@ -202,6 +204,9 @@
       <div class="dz-alt">or <span class="link">browse files</span> · or <span class="link" id="demo-link">watch the demo</span></div>
     </div>
     <input type="file" id="file-input" accept=".json,application/json" hidden>
+    <div class="get-export">No export yet? Run a prompt on an open-weight model in
+      <a href="https://www.neuronpedia.org/jlens" target="_blank" rel="noopener">Neuronpedia's Jacobian-lens explorer</a>,
+      click the download icon to export it as JSON, and drop the file here.</div>
     <div id="landing-error"></div>
     <div id="gallery">
       <div class="g-head">or pick a captured run</div>
@@ -365,6 +370,10 @@
     was leaning toward saying, caught before the final layers got their veto. Decode percentages are
     lens readouts (a first-order approximation of what the remaining layers would do), not the
     model's actual output probabilities.</div>
+    <div class="help-note">Make your own: run a prompt on an open-weight model in
+    <a href="https://www.neuronpedia.org/jlens" target="_blank" rel="noopener">Neuronpedia's Jacobian-lens explorer</a>,
+    click the download icon to export the run as JSON, then load it here with <b>Load file</b> (or
+    drop it anywhere on the page).</div>
     <div class="d-actions">
       <button class="btn" id="btn-help-close">Close</button>
     </div>
